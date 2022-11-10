@@ -1,0 +1,79 @@
+
+{% extends "base.html" %}
+{% block content %}
+{% load static%}
+
+<!-- Start Filters Section -->
+<div class="site-section">
+	<div class="container">
+		<div class="row">
+	
+			<div class="col-lg-3">
+				<h3 class="mb-3 h6 text-uppercase text-black d-block">فیلتر بر اساس کشور</h3>
+				<button type="button" class="btn btn-secondary btn-md dropdown-toggle" id="dropdownMenuReference" data-toggle="dropdown">کشور</button>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
+					<form  method="get">
+						{% for university in universities %}
+						<input type="radio" name="filter_country" value="{{university.city.country.name}}">{{university.city.country.name}}
+						<br/>
+							<!-- <a class="dropdown-item" href="{%url 'list-university'%}" value='b'>{{university.city.country.name}}</a> -->
+						{% endfor %} 
+						<input type="submit" value="فیلتر" name="submit"> 
+
+					</form>
+					
+				</div>
+			</div>
+			<div class="col-lg-3">
+				<h3 class="mb-3 h6 text-uppercase text-black d-block">فیلتر بر اساس شهر </h3>
+					<button type="button" class="btn btn-secondary btn-md dropdown-toggle" id="dropdownMenuReference" data-toggle="dropdown">شهر</button>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
+							<form method='get'>
+						{% for university in universities %}
+							<input type="radio" name="filter_city" value="{{university.city.name}}">{{university.city.name}}
+							<br/>
+						{% endfor %}
+						<input type="submit" value="فیلتر" name="submit"> 
+					</form>
+				</div>
+			</div>
+					<form method="get">
+						<input type="text" placeholder="دانشگاه,شهر,کشور" name='search'>
+						<input type="submit" value="جست و جو" name="submit"> 
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+		{% for university in universities %}
+			<div class="col-sm-6 col-lg-4 text-center item mb-4">
+				<a href="{%url 'detail-university' university.id %}"> <img src="{{university.img.url}}" alt="Image" style='width: 300px; background-color: blue;'  ></a>
+				<h3 class="text-dark" ><a href="{%url 'detail-university' university.id %}">{{university.name}}</a></h3>
+				<p class="price">{{university.city.country.name}} &mdash;{{university.city.name}}</p>
+			</div>
+		{% endfor %}
+		</div>
+    <!--Pagination-->
+		<div class="row mt-5">
+			<div class="col-md-12 text-center">
+				<div class="site-block-27">
+					<ul>
+						{% if page_obj.has_previous %}
+							<li><a href="?page={{ page_obj.previous_page_number }}">&lt;</a></li>
+						{% endif %}
+						<li><a>{{ page_obj.number }}</a></li>از <li><a>{{ page_obj.paginator.num_pages }}</a></li>
+						{% if page_obj.has_next %}
+							<li><a href="?page={{ page_obj.next_page_number }}">&gt;</a></li>
+						{% endif %}
+					</ul>
+				</div>
+			</div>
+		</div>
+    <!--end of Pagination-->
+	</div>
+</div>
+<!-- End Filters Section -->
+
+{% endblock content %}
+	

@@ -1,0 +1,1 @@
+This is a project to display the list of foreign universities for educational immigration, which has a brief description of the university, address, number of students, number of international students, etc.
