@@ -9,34 +9,60 @@
 		<div class="row">
 	
 			<div class="col-lg-3">
-				<h3 class="mb-3 h6 text-uppercase text-black d-block">فیلتر بر اساس کشور</h3>
-				<button type="button" class="btn btn-secondary btn-md dropdown-toggle" id="dropdownMenuReference" data-toggle="dropdown">کشور</button>
+				<h3 class="mb-3 h6 text-uppercase text-black d-block">فیلتر   </h3> 
+				<button type="button" class="btn btn-secondary btn-md dropdown-toggle" id="dropdownMenuReference" data-toggle="dropdown">کشور وشهر</button>
 				<div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
 					<form  method="get">
-						{% for university in universities %}
-						<input type="radio" name="filter_country" value="{{university.city.country.name}}">{{university.city.country.name}}
+						<h5>کشور</h4>
 						<br/>
-							<!-- <a class="dropdown-item" href="{%url 'list-university'%}" value='b'>{{university.city.country.name}}</a> -->
-						{% endfor %} 
+
+						{% if get_country or get_city %}
+							{% for countr in country %}
+								{% if countr.name in get_country %}
+									<input type="checkbox" name="country" checked value="{{countr.name}}">{{countr.name}}
+								{% else %}
+									<input type="checkbox" name="country" value="{{countr.name}}">{{countr.name}}
+								{% endif %}
+								<br/>
+							{% endfor %} 
+
+							<h5>شهر</h5>
+
+							{% for cit in city %}
+								{% if cit.name in get_city %}
+									<input type="checkbox" name="city" checked value="{{cit.name}}">{{cit.name}}
+								{% else %}
+									<input type="checkbox" name="city" value="{{cit.name}}">{{cit.name}}
+								{% endif %}
+								<br/>
+							{% endfor %} 
+
+						{% else %}
+
+						<h5>کشور</h4>
+
+							{% for countr in country %}
+								<input type="checkbox" name="country" value="{{countr.name}}">{{countr.name}}
+								<br/>
+							{% endfor %}
+
+							<h5>شهر</h5>
+
+							{% for cit in city %}
+								<input type="checkbox" name="city"  value="{{cit.name}}">{{cit.name}}
+								<br/>
+							{% endfor %} 
+
+						{% endif %}
+					
+						<br/>
 						<input type="submit" value="فیلتر" name="submit"> 
 
 					</form>
 					
 				</div>
 			</div>
-			<div class="col-lg-3">
-				<h3 class="mb-3 h6 text-uppercase text-black d-block">فیلتر بر اساس شهر </h3>
-					<button type="button" class="btn btn-secondary btn-md dropdown-toggle" id="dropdownMenuReference" data-toggle="dropdown">شهر</button>
-						<div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
-							<form method='get'>
-						{% for university in universities %}
-							<input type="radio" name="filter_city" value="{{university.city.name}}">{{university.city.name}}
-							<br/>
-						{% endfor %}
-						<input type="submit" value="فیلتر" name="submit"> 
-					</form>
-				</div>
-			</div>
+	
 					<form method="get">
 						<input type="text" placeholder="دانشگاه,شهر,کشور" name='search'>
 						<input type="submit" value="جست و جو" name="submit"> 

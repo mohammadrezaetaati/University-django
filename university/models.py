@@ -9,19 +9,25 @@ class Country(models.Model):
     def __str__(self) -> str:
         return self.name
 
+    class Meta:
+        ordering = ("name",)
+
 
 class City(models.Model):
 
     name = models.CharField(max_length=100)
-    country = models.OneToOneField(Country, on_delete=models.CASCADE)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
-        return f"{self.country}-{self.name}"
+        return f"{self.country.name}-{self.name}"
+
+    class Meta:
+        ordering = ("name",)
 
 
 class University(models.Model):
 
-    city = models.OneToOneField(City, on_delete=models.CASCADE)
+    city = models.ForeignKey(City, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     acronym = models.CharField(max_length=50)
     img = models.ImageField()
@@ -39,3 +45,6 @@ class University(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+    class Meta:
+        ordering = ("name",)
